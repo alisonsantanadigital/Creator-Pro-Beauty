@@ -9,6 +9,11 @@ import {
   Mail,
   MessageCircle,
 } from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+  EDITORIAL_EASE,
+  EditorialReveal,
+} from '@/components/EditorialMotion';
 import {
   CONTACT_INFO,
   CREATOR_PROFILE,
@@ -84,7 +89,7 @@ export default function ContactSection({
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-14">
           {/* Left Column: Direct Demonstrative Channels */}
-          <div className="lg:col-span-5">
+          <EditorialReveal className="lg:col-span-5">
             <p className="text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase">
               05. Contato Comercial
             </p>
@@ -99,10 +104,13 @@ export default function ContactSection({
 
             <div className="mt-8 space-y-4">
               {/* WhatsApp Comercial Demonstrativo */}
-              <a
+              <motion.a
                 href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ duration: 0.16, ease: EDITORIAL_EASE }}
                 className="group flex items-center justify-between rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-5 transition-colors hover:border-[#3A2821] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
               >
                 <div className="flex items-start gap-3.5">
@@ -123,10 +131,14 @@ export default function ContactSection({
                   className="h-4 w-4 text-[#6B534A] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   aria-hidden="true"
                 />
-              </a>
+              </motion.a>
 
               {/* Email Demonstrativo */}
-              <div className="flex flex-col justify-between gap-3 rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-5 sm:flex-row sm:items-center">
+              <motion.div
+                whileHover={{ y: -2 }}
+                transition={{ duration: 0.16, ease: EDITORIAL_EASE }}
+                className="flex flex-col justify-between gap-3 rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-5 transition-colors hover:border-[#C99E93] sm:flex-row sm:items-center"
+              >
                 <a
                   href={mailtoHref}
                   className="flex items-start gap-3.5 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
@@ -145,8 +157,9 @@ export default function ContactSection({
                   </div>
                 </a>
 
-                <button
+                <motion.button
                   type="button"
+                  whileTap={{ scale: 0.95 }}
                   onClick={handleCopyEmail}
                   aria-label="Copiar e-mail demonstrativo"
                   className="inline-flex min-h-[38px] items-center justify-center gap-1.5 rounded-sm border border-[#E3D7CE] bg-[#F3ECE6] px-3 py-1.5 text-xs font-medium text-[#3A2821] transition-colors hover:bg-[#E8DFD1] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
@@ -162,14 +175,17 @@ export default function ContactSection({
                       <span>Copiar</span>
                     </>
                   )}
-                </button>
-              </div>
+                </motion.button>
+              </motion.div>
 
               {/* Instagram Demonstrativo */}
-              <a
+              <motion.a
                 href={CONTACT_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.99 }}
+                transition={{ duration: 0.16, ease: EDITORIAL_EASE }}
                 className="group flex items-center justify-between rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-5 transition-colors hover:border-[#3A2821] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
               >
                 <div className="flex items-start gap-3.5">
@@ -190,16 +206,19 @@ export default function ContactSection({
                   className="h-4 w-4 text-[#6B534A] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                   aria-hidden="true"
                 />
-              </a>
+              </motion.a>
             </div>
 
             <p className="mt-6 text-xs leading-relaxed text-[#6B534A]">
               {CONTACT_INFO.agencyCredit}
             </p>
-          </div>
+          </EditorialReveal>
 
           {/* Right Column: Commercial Proposal Composer */}
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-8 lg:col-span-7">
+          <EditorialReveal
+            delay={0.08}
+            className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-8 lg:col-span-7"
+          >
             <div className="border-b border-[#EDE3DA] pb-5">
               <p className="text-xs font-medium tracking-[0.12em] text-[#6B534A] uppercase">
                 Atendimento de Parcerias
@@ -234,7 +253,7 @@ export default function ContactSection({
                       if (feedbackError) setFeedbackError('');
                     }}
                     placeholder="Ex.: Atelier Lumière (Exemplo)"
-                    className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
+                    className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] transition-colors placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
                   />
                 </div>
 
@@ -254,7 +273,7 @@ export default function ContactSection({
                       if (feedbackError) setFeedbackError('');
                     }}
                     placeholder="parcerias@suamarca.com.br"
-                    className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
+                    className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] transition-colors placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
                   />
                 </div>
               </div>
@@ -270,7 +289,7 @@ export default function ContactSection({
                   id="partnership-format"
                   value={selectedFormatId}
                   onChange={(e) => onChangeFormatId(e.target.value)}
-                  className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] focus:border-[#3A2821] focus:outline-none"
+                  className="mt-2 block min-h-[44px] w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] transition-colors focus:border-[#3A2821] focus:outline-none"
                 >
                   {PARTNERSHIP_FORMATS.map((format) => (
                     <option key={format.id} value={format.id}>
@@ -293,34 +312,49 @@ export default function ContactSection({
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Descreva brevemente o lançamento, período previsto ou linha de skincare/maquiagem."
-                  className="mt-2 block w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
+                  className="mt-2 block w-full rounded-sm border border-[#D9CCB8] bg-[#FAF7F4] px-3.5 py-2.5 text-sm text-[#3A2821] transition-colors placeholder:text-[#9A8379] focus:border-[#3A2821] focus:outline-none"
                 />
               </div>
 
-              {feedbackError && (
-                <p
-                  role="alert"
-                  className="rounded-sm border border-[#C99E93] bg-[#DFC1B8]/25 px-4 py-2.5 text-xs font-medium text-[#3A2821]"
-                >
-                  {feedbackError}
-                </p>
-              )}
+              <AnimatePresence mode="wait">
+                {feedbackError && (
+                  <motion.p
+                    key="error-msg"
+                    role="alert"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.18, ease: EDITORIAL_EASE }}
+                    className="rounded-sm border border-[#C99E93] bg-[#DFC1B8]/25 px-4 py-2.5 text-xs font-medium text-[#3A2821]"
+                  >
+                    {feedbackError}
+                  </motion.p>
+                )}
 
-              {proposalReady && !feedbackError && (
-                <div
-                  role="status"
-                  className="rounded-sm border border-[#D9CCB8] bg-[#E8DFD1]/60 px-4 py-3 text-xs leading-relaxed text-[#3A2821]"
-                >
-                  Solicitação formatada com sucesso para ambiente demonstrativo.
-                  Escolha abaixo o canal para abrir sua mensagem preenchida.
-                </div>
-              )}
+                {proposalReady && !feedbackError && (
+                  <motion.div
+                    key="ready-msg"
+                    role="status"
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.18, ease: EDITORIAL_EASE }}
+                    className="rounded-sm border border-[#D9CCB8] bg-[#E8DFD1]/60 px-4 py-3 text-xs leading-relaxed text-[#3A2821]"
+                  >
+                    Solicitação formatada com sucesso para ambiente demonstrativo.
+                    Escolha abaixo o canal para abrir sua mensagem preenchida.
+                  </motion.div>
+                )}
+              </AnimatePresence>
 
               <div className="flex flex-col gap-3 pt-2 sm:flex-row">
-                <a
+                <motion.a
                   href={whatsappHref}
                   target="_blank"
                   rel="noopener noreferrer"
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.985 }}
+                  transition={{ duration: 0.15, ease: EDITORIAL_EASE }}
                   onClick={(e) => {
                     if (!validateBeforeAction()) {
                       e.preventDefault();
@@ -330,10 +364,13 @@ export default function ContactSection({
                 >
                   <MessageCircle className="h-4 w-4" aria-hidden="true" />
                   <span>Enviar via WhatsApp (Demo)</span>
-                </a>
+                </motion.a>
 
-                <a
+                <motion.a
                   href={mailtoHref}
+                  whileHover={{ y: -1 }}
+                  whileTap={{ scale: 0.985 }}
+                  transition={{ duration: 0.15, ease: EDITORIAL_EASE }}
                   onClick={(e) => {
                     if (!validateBeforeAction()) {
                       e.preventDefault();
@@ -343,10 +380,10 @@ export default function ContactSection({
                 >
                   <Mail className="h-4 w-4" aria-hidden="true" />
                   <span>Enviar por E-mail (Demo)</span>
-                </a>
+                </motion.a>
               </div>
             </form>
-          </div>
+          </EditorialReveal>
         </div>
       </div>
     </section>

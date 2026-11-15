@@ -3,6 +3,7 @@
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { motion } from 'motion/react';
 import EditorialImage from '@/components/EditorialImage';
+import { EDITORIAL_EASE, VIEWPORT_ONCE } from '@/components/EditorialMotion';
 import { CREATOR_PROFILE } from '@/data/creator-data';
 
 export default function HeroSection() {
@@ -14,36 +15,66 @@ export default function HeroSection() {
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
           {/* Left Column: Editorial Hierarchy & Positioning */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-            className="flex flex-col justify-between lg:col-span-7 lg:py-4"
-          >
+          <div className="flex flex-col justify-between lg:col-span-7 lg:py-4">
             <div>
-              <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase">
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: EDITORIAL_EASE }}
+                className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase"
+              >
                 <span>{CREATOR_PROFILE.agencyName}</span>
                 <span aria-hidden="true">·</span>
                 <span>{CREATOR_PROFILE.niche}</span>
-              </div>
+              </motion.div>
 
-              <h1 className="font-editorial text-[clamp(2.75rem,5.2vw,4.5rem)] leading-[1.03] font-normal tracking-tight text-[#3A2821] text-balance">
+              <motion.h1
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.06,
+                  ease: EDITORIAL_EASE,
+                }}
+                className="font-editorial text-[clamp(2.75rem,5.2vw,4.5rem)] leading-[1.03] font-normal tracking-tight text-[#3A2821] text-balance"
+              >
                 {CREATOR_PROFILE.creatorName}
-              </h1>
+              </motion.h1>
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-[#5C463D] sm:text-lg">
+              <motion.p
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.12,
+                  ease: EDITORIAL_EASE,
+                }}
+                className="mt-6 max-w-xl text-base leading-relaxed text-[#5C463D] sm:text-lg"
+              >
                 {CREATOR_PROFILE.positioning}
-              </p>
+              </motion.p>
 
               {/* Social Channels Summary */}
-              <div className="mt-8 grid max-w-lg grid-cols-1 gap-4 border-y border-[#E3D7CE] py-5 sm:grid-cols-2 sm:gap-6">
+              <motion.div
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.45,
+                  delay: 0.18,
+                  ease: EDITORIAL_EASE,
+                }}
+                className="mt-8 grid max-w-lg grid-cols-1 gap-4 border-y border-[#E3D7CE] py-5 sm:grid-cols-2 sm:gap-6"
+              >
                 {CREATOR_PROFILE.socialSummary.map((social) => (
-                  <a
+                  <motion.a
                     key={social.platform}
                     href={social.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-start justify-between gap-3 transition-opacity hover:opacity-80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]/40"
+                    whileHover={{ y: -2 }}
+                    whileTap={{ scale: 0.985 }}
+                    transition={{ duration: 0.16, ease: EDITORIAL_EASE }}
+                    className="group flex items-start justify-between gap-3 rounded-sm p-1 -m-1 transition-colors hover:bg-[#F3ECE6]/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]/40"
                   >
                     <div>
                       <div className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] text-[#6B534A] uppercase">
@@ -60,20 +91,32 @@ export default function HeroSection() {
                       className="mt-1 h-4 w-4 text-[#6B534A] transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                       aria-hidden="true"
                     />
-                  </a>
+                  </motion.a>
                 ))}
-              </div>
+              </motion.div>
             </div>
 
             {/* Primary CTA & Secondary Link */}
-            <div className="mt-8 flex flex-wrap items-center gap-5">
-              <a
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{
+                duration: 0.45,
+                delay: 0.24,
+                ease: EDITORIAL_EASE,
+              }}
+              className="mt-8 flex flex-wrap items-center gap-5"
+            >
+              <motion.a
                 href="#contato"
+                whileHover={{ y: -1.5 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ duration: 0.15, ease: EDITORIAL_EASE }}
                 className="inline-flex min-h-[46px] items-center gap-2.5 rounded-sm bg-[#3A2821] px-7 py-3.5 text-sm font-medium text-[#FAF7F4] transition-colors duration-150 hover:bg-[#291B16] whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
               >
                 <span>Parcerias Comerciais</span>
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
+              </motion.a>
 
               <a
                 href="#portfolio"
@@ -81,14 +124,14 @@ export default function HeroSection() {
               >
                 Explorar Campanhas Conceituais
               </a>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
           {/* Right Column: Dominant Beauty Editorial Portrait */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.985 }}
+            initial={{ opacity: 0, scale: 0.975 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.08, ease: EDITORIAL_EASE }}
             className="lg:col-span-5"
           >
             <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] lg:h-full lg:min-h-[540px]">
@@ -98,14 +141,20 @@ export default function HeroSection() {
                 priority
                 sizes="(max-width: 1024px) 100vw, 42vw"
                 fallbackTitle="Isabela Rocha — Beauty Editorial"
-                className="object-cover object-top"
+                className="object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.02]"
               />
             </div>
           </motion.div>
         </div>
 
         {/* Full-Width Demonstrative Context Bar */}
-        <div className="mt-12 grid grid-cols-1 gap-4 rounded-sm border border-[#E3D7CE] bg-[#F3ECE6] px-6 py-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={VIEWPORT_ONCE}
+          transition={{ duration: 0.45, delay: 0.1, ease: EDITORIAL_EASE }}
+          className="mt-12 grid grid-cols-1 gap-4 rounded-sm border border-[#E3D7CE] bg-[#F3ECE6] px-6 py-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6"
+        >
           <div>
             <p className="text-xs font-medium tracking-[0.1em] text-[#6B534A] uppercase">
               Representação Demonstrativa
@@ -138,7 +187,7 @@ export default function HeroSection() {
               Métricas e contatos fictícios
             </p>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

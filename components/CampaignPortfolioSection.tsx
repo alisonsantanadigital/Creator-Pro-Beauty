@@ -5,6 +5,11 @@ import { Maximize2, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import EditorialImage from '@/components/EditorialImage';
 import {
+  EDITORIAL_EASE,
+  EditorialReveal,
+  VIEWPORT_ONCE,
+} from '@/components/EditorialMotion';
+import {
   CAMPAIGN_PORTFOLIO,
   type CampaignCategory,
   type CampaignItem,
@@ -51,7 +56,7 @@ export default function CampaignPortfolioSection() {
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Header & Category Filter */}
-        <div className="flex flex-col justify-between gap-6 border-b border-[#E3D7CE] pb-8 lg:flex-row lg:items-end">
+        <EditorialReveal className="flex flex-col justify-between gap-6 border-b border-[#E3D7CE] pb-8 lg:flex-row lg:items-end">
           <div>
             <p className="text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase">
               03. Campaign Portfolio
@@ -81,81 +86,101 @@ export default function CampaignPortfolioSection() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => setActiveCategory(category)}
-                  className={`min-h-[38px] rounded-sm px-3.5 py-2 text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821] ${
+                  className={`relative min-h-[38px] rounded-sm px-3.5 py-2 text-xs font-medium transition-colors duration-150 whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821] ${
                     isActive
-                      ? 'bg-[#3A2821] text-[#FAF7F4]'
+                      ? 'text-[#FAF7F4]'
                       : 'text-[#6B534A] hover:bg-[#F3ECE6] hover:text-[#3A2821]'
                   }`}
                 >
-                  {category}
+                  {isActive && (
+                    <motion.span
+                      layoutId="portfolio-active-tab"
+                      transition={{ duration: 0.22, ease: EDITORIAL_EASE }}
+                      className="absolute inset-0 rounded-sm bg-[#3A2821]"
+                    />
+                  )}
+                  <span className="relative z-10">{category}</span>
                 </button>
               );
             })}
           </div>
-        </div>
+        </EditorialReveal>
 
         {/* 2x2 Editorial Grid */}
-        <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-          {filteredCampaigns.map((item) => (
-            <motion.article
-              key={item.id}
-              layout
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-              className="group flex flex-col overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#FAF7F4]"
-            >
-              <button
-                type="button"
-                onClick={() => setSelectedCampaign(item)}
-                aria-label={`Ampliar campanha ${item.title}`}
-                className="relative aspect-[4/3] w-full overflow-hidden bg-[#EDE3DA] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3A2821]"
+        <motion.div
+          layout
+          className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2"
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredCampaigns.map((item, idx) => (
+              <motion.article
+                key={item.id}
+                layout
+                initial={{ opacity: 0, y: 14 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                whileHover={{ y: -3 }}
+                viewport={VIEWPORT_ONCE}
+                transition={{
+                  duration: 0.35,
+                  delay: idx * 0.05,
+                  ease: EDITORIAL_EASE,
+                }}
+                className="group flex flex-col overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#FAF7F4]"
               >
-                <EditorialImage
-                  src={item.image}
-                  alt={item.imageAlt}
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  fallbackTitle={item.title}
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
-                />
-                <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-sm bg-[#3A2821]/85 px-3 py-1.5 text-xs font-medium text-[#FAF7F4] opacity-95 backdrop-blur-xs transition-opacity group-hover:opacity-100">
-                  <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
-                  <span>Detalhes</span>
-                </span>
-              </button>
+                <motion.button
+                  type="button"
+                  whileTap={{ scale: 0.99 }}
+                  onClick={() => setSelectedCampaign(item)}
+                  aria-label={`Ampliar campanha ${item.title}`}
+                  className="relative aspect-[4/3] w-full overflow-hidden bg-[#EDE3DA] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3A2821]"
+                >
+                  <EditorialImage
+                    src={item.image}
+                    alt={item.imageAlt}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    fallbackTitle={item.title}
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+                  />
+                  <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-sm bg-[#3A2821]/85 px-3 py-1.5 text-xs font-medium text-[#FAF7F4] opacity-95 backdrop-blur-xs transition-all duration-150 group-hover:bg-[#3A2821]">
+                    <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
+                    <span>Detalhes</span>
+                  </span>
+                </motion.button>
 
-              <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
-                <div>
-                  <div className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] text-[#6B534A] uppercase">
-                    <span className="tabular-figures">{item.index}</span>
-                    <span aria-hidden="true">·</span>
-                    <span>{item.category}</span>
-                    <span aria-hidden="true">·</span>
-                    <span>Conceitual (Demo)</span>
+                <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
+                  <div>
+                    <div className="flex items-center gap-2 text-xs font-medium tracking-[0.1em] text-[#6B534A] uppercase">
+                      <span className="tabular-figures">{item.index}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>{item.category}</span>
+                      <span aria-hidden="true">·</span>
+                      <span>Conceitual (Demo)</span>
+                    </div>
+
+                    <h3 className="mt-2 font-editorial text-2xl font-medium text-[#3A2821]">
+                      {item.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-[#5C463D]">
+                      {item.conceptNote}
+                    </p>
                   </div>
 
-                  <h3 className="mt-2 font-editorial text-2xl font-medium text-[#3A2821]">
-                    {item.title}
-                  </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-[#5C463D]">
-                    {item.conceptNote}
-                  </p>
+                  <div className="mt-5 flex items-center justify-between border-t border-[#EDE3DA] pt-4 text-xs text-[#6B534A]">
+                    <span>{item.suggestedFormat}</span>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedCampaign(item)}
+                      className="font-medium text-[#3A2821] underline decoration-[#C99E93] underline-offset-4 transition-colors hover:text-[#6B534A] whitespace-nowrap shrink-0"
+                    >
+                      Ver ficha
+                    </button>
+                  </div>
                 </div>
-
-                <div className="mt-5 flex items-center justify-between border-t border-[#EDE3DA] pt-4 text-xs text-[#6B534A]">
-                  <span>{item.suggestedFormat}</span>
-                  <button
-                    type="button"
-                    onClick={() => setSelectedCampaign(item)}
-                    className="font-medium text-[#3A2821] underline decoration-[#C99E93] underline-offset-4 transition-colors hover:text-[#6B534A] whitespace-nowrap shrink-0"
-                  >
-                    Ver ficha
-                  </button>
-                </div>
-              </div>
-            </motion.article>
-          ))}
-        </div>
+              </motion.article>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
       {/* Editorial Lightbox Modal */}
@@ -173,21 +198,22 @@ export default function CampaignPortfolioSection() {
             aria-labelledby="lightbox-title"
           >
             <motion.div
-              initial={{ opacity: 0, y: 12, scale: 0.98 }}
+              initial={{ opacity: 0, y: 16, scale: 0.975 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 8, scale: 0.98 }}
-              transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, y: 10, scale: 0.975 }}
+              transition={{ duration: 0.24, ease: EDITORIAL_EASE }}
               onClick={(e) => e.stopPropagation()}
               className="relative grid max-h-[90vh] w-full max-w-4xl grid-cols-1 overflow-y-auto rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] md:grid-cols-12"
             >
-              <button
+              <motion.button
                 type="button"
+                whileTap={{ scale: 0.94 }}
                 onClick={() => setSelectedCampaign(null)}
                 aria-label="Fechar visualização"
                 className="absolute top-3 right-3 z-10 inline-flex h-10 w-10 items-center justify-center rounded-sm border border-[#E3D7CE] bg-[#FAF7F4]/95 text-[#3A2821] transition-colors hover:bg-[#EDE3DA] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821]"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
-              </button>
+              </motion.button>
 
               <div className="relative aspect-[4/3] w-full bg-[#EDE3DA] md:col-span-7 md:aspect-auto md:min-h-[420px]">
                 <EditorialImage
@@ -238,13 +264,14 @@ export default function CampaignPortfolioSection() {
                   </div>
                 </div>
 
-                <a
+                <motion.a
                   href="#contato"
+                  whileTap={{ scale: 0.985 }}
                   onClick={() => setSelectedCampaign(null)}
                   className="mt-8 inline-flex min-h-[44px] w-full items-center justify-center rounded-sm bg-[#3A2821] px-5 py-3 text-xs font-medium tracking-wide text-[#FAF7F4] transition-colors hover:bg-[#291B16]"
                 >
                   Solicitar campanha neste estilo
-                </a>
+                </motion.a>
               </div>
             </motion.div>
           </motion.div>

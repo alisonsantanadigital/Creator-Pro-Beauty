@@ -1,9 +1,37 @@
 'use client';
 
 import { motion } from 'motion/react';
+import {
+  EDITORIAL_EASE,
+  EditorialReveal,
+  VIEWPORT_ONCE,
+} from '@/components/EditorialMotion';
 import { AUDIENCE_INSIGHTS } from '@/data/creator-data';
 
 export default function AudienceInsightsSection() {
+  const kpiCards = [
+    {
+      label: 'Base Combinada',
+      value: AUDIENCE_INSIGHTS.totalReach,
+      sub: 'Seguidores fictícios totais',
+    },
+    {
+      label: 'Impressões Mensais',
+      value: AUDIENCE_INSIGHTS.monthlyImpressions,
+      sub: 'Média estimada (demo)',
+    },
+    {
+      label: 'Engajamento Médio',
+      value: AUDIENCE_INSIGHTS.avgEngagement,
+      sub: 'Taxa consolidada (demo)',
+    },
+    {
+      label: 'Taxa de Salvamentos',
+      value: AUDIENCE_INSIGHTS.audienceSaveRate,
+      sub: 'Conteúdo educativo (demo)',
+    },
+  ];
+
   return (
     <section
       id="audiencia"
@@ -11,7 +39,7 @@ export default function AudienceInsightsSection() {
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col justify-between gap-4 border-b border-[#E3D7CE] pb-8 md:flex-row md:items-end">
+        <EditorialReveal className="flex flex-col justify-between gap-4 border-b border-[#E3D7CE] pb-8 md:flex-row md:items-end">
           <div>
             <p className="text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase">
               01. Audience Insights
@@ -24,57 +52,33 @@ export default function AudienceInsightsSection() {
             Indicadores fictícios para demonstração comercial de mídia kit no
             segmento de beleza e cuidados pessoais.
           </p>
-        </div>
+        </EditorialReveal>
 
         {/* Top Consolidated Metric Strip */}
         <div className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4 lg:gap-6">
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6">
-            <p className="text-xs font-medium tracking-[0.08em] text-[#6B534A] uppercase">
-              Base Combinada
-            </p>
-            <p className="mt-2 font-editorial text-4xl font-medium text-[#3A2821] tabular-figures">
-              {AUDIENCE_INSIGHTS.totalReach}
-            </p>
-            <p className="mt-1 text-xs text-[#7C6359]">
-              Seguidores fictícios totais
-            </p>
-          </div>
-
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6">
-            <p className="text-xs font-medium tracking-[0.08em] text-[#6B534A] uppercase">
-              Impressões Mensais
-            </p>
-            <p className="mt-2 font-editorial text-4xl font-medium text-[#3A2821] tabular-figures">
-              {AUDIENCE_INSIGHTS.monthlyImpressions}
-            </p>
-            <p className="mt-1 text-xs text-[#7C6359]">
-              Média estimada (demo)
-            </p>
-          </div>
-
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6">
-            <p className="text-xs font-medium tracking-[0.08em] text-[#6B534A] uppercase">
-              Engajamento Médio
-            </p>
-            <p className="mt-2 font-editorial text-4xl font-medium text-[#3A2821] tabular-figures">
-              {AUDIENCE_INSIGHTS.avgEngagement}
-            </p>
-            <p className="mt-1 text-xs text-[#7C6359]">
-              Taxa consolidada (demo)
-            </p>
-          </div>
-
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6">
-            <p className="text-xs font-medium tracking-[0.08em] text-[#6B534A] uppercase">
-              Taxa de Salvamentos
-            </p>
-            <p className="mt-2 font-editorial text-4xl font-medium text-[#3A2821] tabular-figures">
-              {AUDIENCE_INSIGHTS.audienceSaveRate}
-            </p>
-            <p className="mt-1 text-xs text-[#7C6359]">
-              Conteúdo educativo (demo)
-            </p>
-          </div>
+          {kpiCards.map((card, idx) => (
+            <motion.div
+              key={card.label}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -2 }}
+              viewport={VIEWPORT_ONCE}
+              transition={{
+                duration: 0.4,
+                delay: idx * 0.06,
+                ease: EDITORIAL_EASE,
+              }}
+              className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-5 sm:p-6"
+            >
+              <p className="text-xs font-medium tracking-[0.08em] text-[#6B534A] uppercase">
+                {card.label}
+              </p>
+              <p className="mt-2 font-editorial text-3xl font-medium text-[#3A2821] tabular-figures sm:text-4xl">
+                {card.value}
+              </p>
+              <p className="mt-1 text-xs text-[#7C6359]">{card.sub}</p>
+            </motion.div>
+          ))}
         </div>
 
         {/* Platform Cards */}
@@ -82,13 +86,14 @@ export default function AudienceInsightsSection() {
           {AUDIENCE_INSIGHTS.platforms.map((platform, index) => (
             <motion.article
               key={platform.id}
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
+              whileHover={{ y: -2 }}
+              viewport={VIEWPORT_ONCE}
               transition={{
-                duration: 0.35,
+                duration: 0.4,
                 delay: index * 0.08,
-                ease: [0.16, 1, 0.3, 1],
+                ease: EDITORIAL_EASE,
               }}
               className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-8"
             >
@@ -139,8 +144,11 @@ export default function AudienceInsightsSection() {
 
         {/* Demographics & Interests */}
         <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-3">
-          {/* Age & Gender */}
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-7">
+          {/* Age */}
+          <EditorialReveal
+            delay={0.04}
+            className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-7"
+          >
             <h3 className="font-editorial text-2xl font-medium text-[#3A2821]">
               Perfil Etário
             </h3>
@@ -148,7 +156,7 @@ export default function AudienceInsightsSection() {
               Distribuição ilustrativa por faixa de idade
             </p>
             <div className="mt-6 space-y-4">
-              {AUDIENCE_INSIGHTS.ageGroups.map((group) => (
+              {AUDIENCE_INSIGHTS.ageGroups.map((group, idx) => (
                 <div key={group.label}>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[#3A2821]">{group.label}</span>
@@ -157,18 +165,29 @@ export default function AudienceInsightsSection() {
                     </span>
                   </div>
                   <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[#EDE3DA]">
-                    <div
-                      className="h-full rounded-full bg-[#6B534A]"
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={VIEWPORT_ONCE}
+                      transition={{
+                        duration: 0.65,
+                        delay: 0.1 + idx * 0.06,
+                        ease: EDITORIAL_EASE,
+                      }}
+                      className="h-full origin-left rounded-full bg-[#6B534A]"
                       style={{ width: `${group.percentage}%` }}
                     />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </EditorialReveal>
 
           {/* Gender & Geography */}
-          <div className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-7">
+          <EditorialReveal
+            delay={0.1}
+            className="rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-7"
+          >
             <h3 className="font-editorial text-2xl font-medium text-[#3A2821]">
               Gênero & Regiões
             </h3>
@@ -191,7 +210,7 @@ export default function AudienceInsightsSection() {
             </div>
 
             <div className="mt-5 space-y-3">
-              {AUDIENCE_INSIGHTS.topLocations.map((loc) => (
+              {AUDIENCE_INSIGHTS.topLocations.map((loc, idx) => (
                 <div key={loc.label}>
                   <div className="flex items-center justify-between text-xs">
                     <span className="text-[#3A2821]">{loc.label}</span>
@@ -200,18 +219,29 @@ export default function AudienceInsightsSection() {
                     </span>
                   </div>
                   <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-[#EDE3DA]">
-                    <div
-                      className="h-full rounded-full bg-[#C99E93]"
+                    <motion.div
+                      initial={{ scaleX: 0 }}
+                      whileInView={{ scaleX: 1 }}
+                      viewport={VIEWPORT_ONCE}
+                      transition={{
+                        duration: 0.65,
+                        delay: 0.15 + idx * 0.06,
+                        ease: EDITORIAL_EASE,
+                      }}
+                      className="h-full origin-left rounded-full bg-[#C99E93]"
                       style={{ width: `${loc.percentage}%` }}
                     />
                   </div>
                 </div>
               ))}
             </div>
-          </div>
+          </EditorialReveal>
 
           {/* Interests */}
-          <div className="flex flex-col justify-between rounded-sm border border-[#E3D7CE] bg-[#E8DFD1]/55 p-6 sm:p-7">
+          <EditorialReveal
+            delay={0.16}
+            className="flex flex-col justify-between rounded-sm border border-[#E3D7CE] bg-[#E8DFD1]/55 p-6 sm:p-7"
+          >
             <div>
               <h3 className="font-editorial text-2xl font-medium text-[#3A2821]">
                 Interesses da Audiência
@@ -239,7 +269,7 @@ export default function AudienceInsightsSection() {
               Nota: Dados apresentados exclusivamente para fins de demonstração
               comercial do formato CREATOR PRO.
             </p>
-          </div>
+          </EditorialReveal>
         </div>
       </div>
     </section>

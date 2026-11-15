@@ -3,6 +3,11 @@
 import { ArrowRight, Check } from 'lucide-react';
 import { motion } from 'motion/react';
 import {
+  EDITORIAL_EASE,
+  EditorialReveal,
+  VIEWPORT_ONCE,
+} from '@/components/EditorialMotion';
+import {
   PARTNERSHIP_FORMATS,
   type PartnershipFormat,
 } from '@/data/creator-data';
@@ -31,7 +36,7 @@ export default function BrandPartnershipsSection({
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col justify-between gap-4 border-b border-[#E3D7CE] pb-8 md:flex-row md:items-end">
+        <EditorialReveal className="flex flex-col justify-between gap-4 border-b border-[#E3D7CE] pb-8 md:flex-row md:items-end">
           <div>
             <p className="text-xs font-medium tracking-[0.14em] text-[#6B534A] uppercase">
               04. Brand Partnerships
@@ -44,7 +49,7 @@ export default function BrandPartnershipsSection({
             Estruturas desenhadas para lançamentos, educação de produto e
             produção de conteúdo com estética de beleza premium.
           </p>
-        </div>
+        </EditorialReveal>
 
         {/* Commercial Formats Grid */}
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -53,13 +58,14 @@ export default function BrandPartnershipsSection({
             return (
               <motion.article
                 key={format.id}
-                initial={{ opacity: 0, y: 10 }}
+                initial={{ opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
+                whileHover={{ y: -3 }}
+                viewport={VIEWPORT_ONCE}
                 transition={{
-                  duration: 0.3,
-                  delay: idx * 0.04,
-                  ease: [0.16, 1, 0.3, 1],
+                  duration: 0.38,
+                  delay: idx * 0.05,
+                  ease: EDITORIAL_EASE,
                 }}
                 className={`flex flex-col justify-between rounded-sm border p-6 transition-colors duration-150 sm:p-7 ${
                   isSelected
@@ -73,10 +79,15 @@ export default function BrandPartnershipsSection({
                       {format.index} · {format.channel}
                     </span>
                     {isSelected && (
-                      <span className="inline-flex items-center gap-1 text-[#3A2821]">
+                      <motion.span
+                        initial={{ opacity: 0, scale: 0.9 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.2, ease: EDITORIAL_EASE }}
+                        className="inline-flex items-center gap-1 text-[#3A2821]"
+                      >
                         <Check className="h-3.5 w-3.5" aria-hidden="true" />
                         <span>Selecionado</span>
-                      </span>
+                      </motion.span>
                     )}
                   </div>
 
@@ -112,8 +123,9 @@ export default function BrandPartnershipsSection({
                     {format.idealFor}
                   </p>
 
-                  <button
+                  <motion.button
                     type="button"
+                    whileTap={{ scale: 0.985 }}
                     onClick={() => handleChooseFormat(format)}
                     className={`mt-4 inline-flex min-h-[42px] w-full items-center justify-between rounded-sm px-4 py-2.5 text-xs font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#3A2821] ${
                       isSelected
@@ -127,7 +139,7 @@ export default function BrandPartnershipsSection({
                         : 'Incluir na proposta'}
                     </span>
                     <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-                  </button>
+                  </motion.button>
                 </div>
               </motion.article>
             );
