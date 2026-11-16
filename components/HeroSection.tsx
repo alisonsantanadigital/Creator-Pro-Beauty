@@ -13,9 +13,9 @@ export default function HeroSection() {
       className="border-b border-[#E3D7CE] bg-[#FAF7F4] pt-10 pb-14 lg:pt-16 lg:pb-20"
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-12">
-          {/* Left Column: Editorial Hierarchy & Positioning */}
-          <div className="flex flex-col justify-between lg:col-span-7 lg:py-4">
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Left Column: Editorial Hierarchy & Positioning (below photo on mobile) */}
+          <div className="order-2 flex flex-col justify-between lg:order-1 lg:col-span-7 lg:py-4">
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
@@ -127,21 +127,26 @@ export default function HeroSection() {
             </motion.div>
           </div>
 
-          {/* Right Column: Dominant Beauty Editorial Portrait */}
+          {/* Right Column / Top on Mobile: Beauty Editorial Portrait */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.975 }}
+            initial={{ opacity: 0, scale: 0.985 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.08, ease: EDITORIAL_EASE }}
-            className="lg:col-span-5"
+            className="order-1 flex justify-center lg:order-2 lg:col-span-5 lg:justify-end"
           >
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] lg:h-full lg:min-h-[540px]">
+            <div className="relative aspect-[16/9] w-full max-w-[540px] overflow-hidden rounded-sm bg-[#EDE3DA] lg:aspect-[3/4] lg:max-w-[390px] lg:border lg:border-[#E3D7CE]">
               <EditorialImage
                 src={CREATOR_PROFILE.heroImage}
                 alt={CREATOR_PROFILE.heroImageAlt}
                 priority
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                sizes="(max-width: 1024px) 100vw, 390px"
                 fallbackTitle="Isabela Rocha — Beauty Editorial"
-                className="object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.02]"
+                className="object-cover object-[50%_20%] transition-transform duration-700 ease-out lg:object-top lg:hover:scale-[1.015]"
+              />
+              {/* Bottom fade into page background on mobile */}
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#FAF7F4] via-[#FAF7F4]/55 to-transparent lg:hidden"
               />
             </div>
           </motion.div>

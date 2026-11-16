@@ -128,25 +128,27 @@ export default function CampaignPortfolioSection() {
                 }}
                 className="group flex flex-col overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#FAF7F4]"
               >
-                <motion.button
-                  type="button"
-                  whileTap={{ scale: 0.99 }}
-                  onClick={() => setSelectedCampaign(item)}
-                  aria-label={`Ampliar campanha ${item.title}`}
-                  className="relative aspect-[4/3] w-full overflow-hidden bg-[#EDE3DA] text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3A2821]"
-                >
-                  <EditorialImage
-                    src={item.image}
-                    alt={item.imageAlt}
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                    fallbackTitle={item.title}
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-                  />
-                  <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-sm bg-[#3A2821]/85 px-3 py-1.5 text-xs font-medium text-[#FAF7F4] opacity-95 backdrop-blur-xs transition-all duration-150 group-hover:bg-[#3A2821]">
-                    <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
-                    <span>Detalhes</span>
-                  </span>
-                </motion.button>
+                <div className="px-6 pt-6 sm:px-7 sm:pt-7">
+                  <motion.button
+                    type="button"
+                    whileTap={{ scale: 0.99 }}
+                    onClick={() => setSelectedCampaign(item)}
+                    aria-label={`Ampliar campanha ${item.title}`}
+                    className="relative mx-auto block aspect-[16/9] w-full max-w-[280px] overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] text-left sm:max-w-[420px] lg:max-w-[480px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#3A2821]"
+                  >
+                    <EditorialImage
+                      src={item.image}
+                      alt={item.imageAlt}
+                      sizes="(max-width: 640px) 280px, (max-width: 1024px) 420px, 480px"
+                      fallbackTitle={item.title}
+                      className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+                    />
+                    <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-sm bg-[#3A2821]/85 px-3 py-1.5 text-xs font-medium text-[#FAF7F4] opacity-95 backdrop-blur-xs transition-all duration-150 group-hover:bg-[#3A2821]">
+                      <Maximize2 className="h-3.5 w-3.5" aria-hidden="true" />
+                      <span>Detalhes</span>
+                    </span>
+                  </motion.button>
+                </div>
 
                 <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
                   <div>
@@ -203,7 +205,7 @@ export default function CampaignPortfolioSection() {
               exit={{ opacity: 0, y: 10, scale: 0.975 }}
               transition={{ duration: 0.24, ease: EDITORIAL_EASE }}
               onClick={(e) => e.stopPropagation()}
-              className="relative grid max-h-[90vh] w-full max-w-4xl grid-cols-1 overflow-y-auto rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] md:grid-cols-12"
+              className="relative grid max-h-[90vh] w-full max-w-4xl grid-cols-1 items-center overflow-y-auto rounded-sm border border-[#E3D7CE] bg-[#FAF7F4] p-6 sm:p-8 md:grid-cols-12 md:gap-8"
             >
               <motion.button
                 type="button"
@@ -215,17 +217,19 @@ export default function CampaignPortfolioSection() {
                 <X className="h-4 w-4" aria-hidden="true" />
               </motion.button>
 
-              <div className="relative aspect-[4/3] w-full bg-[#EDE3DA] md:col-span-7 md:aspect-auto md:min-h-[420px]">
-                <EditorialImage
-                  src={selectedCampaign.image}
-                  alt={selectedCampaign.imageAlt}
-                  sizes="(max-width: 768px) 100vw, 60vw"
-                  fallbackTitle={selectedCampaign.title}
-                  className="object-cover"
-                />
+              <div className="md:col-span-7">
+                <div className="relative mx-auto aspect-[16/9] w-full max-w-[290px] overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] sm:max-w-[460px] md:max-w-[520px]">
+                  <EditorialImage
+                    src={selectedCampaign.image}
+                    alt={selectedCampaign.imageAlt}
+                    sizes="(max-width: 640px) 290px, (max-width: 768px) 460px, 520px"
+                    fallbackTitle={selectedCampaign.title}
+                    className="object-cover object-top"
+                  />
+                </div>
               </div>
 
-              <div className="flex flex-col justify-between p-6 sm:p-8 md:col-span-5">
+              <div className="mt-6 flex flex-col justify-between md:col-span-5 md:mt-0">
                 <div>
                   <p className="text-xs font-medium tracking-[0.12em] text-[#6B534A] uppercase">
                     {selectedCampaign.index} · {selectedCampaign.category}

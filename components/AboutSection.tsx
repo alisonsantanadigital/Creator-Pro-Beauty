@@ -16,22 +16,22 @@ export default function AboutSection() {
       className="border-b border-[#E3D7CE] bg-[#FAF7F4] py-16 lg:py-24"
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-stretch gap-10 lg:grid-cols-12 lg:gap-14">
+        <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
           {/* Left Column: Close-Up Skincare Portrait */}
           <motion.div
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={VIEWPORT_ONCE}
             transition={{ duration: 0.5, ease: EDITORIAL_EASE }}
-            className="lg:col-span-5"
+            className="flex justify-center lg:col-span-5 lg:justify-start"
           >
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] lg:h-full lg:min-h-[580px]">
+            <div className="relative aspect-[3/4] w-full max-w-[260px] overflow-hidden rounded-sm border border-[#E3D7CE] bg-[#EDE3DA] sm:max-w-[290px] lg:aspect-[4/5] lg:max-w-[380px]">
               <EditorialImage
                 src={CREATOR_PROFILE.aboutImage}
                 alt={CREATOR_PROFILE.aboutImageAlt}
-                sizes="(max-width: 1024px) 100vw, 42vw"
+                sizes="(max-width: 640px) 260px, (max-width: 1024px) 290px, 380px"
                 fallbackTitle="Pele & Skincare Editorial"
-                className="object-cover transition-transform duration-700 ease-out hover:scale-[1.02]"
+                className="object-cover object-top transition-transform duration-700 ease-out hover:scale-[1.015]"
               />
             </div>
           </motion.div>
